@@ -1,26 +1,58 @@
 # Custom Unix Shell in C
 
-This project implements a custom shell in C that mimics basic UNIX shell functionality such as executing commands, piping, redirection, and handling built-in commands like `cd`, `pwd`, and `exit`.
+A minimal UNIX-like shell written in C that supports running external commands, basic built-ins, and simple piping. Includes interactive mode and batch/script mode.
 
-## 📁 Project Structure
+## Features
+- **Interactive mode** (REPL-style prompt)
+- **Batch mode** (run commands from a file)
+- **Built-in commands**: `cd`, `pwd`, `exit`
+- **External command execution** via `fork()` + `execvp()`
+- **Simple piping** (two commands: `cmd1 | cmd2`)
+- **Basic parsing/tokenization** of user input
 
-- `mysh.c`: Main shell program supporting interactive and batch modes.
-- `commands.c` / `commands.h`: Logic for built-in command handling and path resolution.
-- `pipe.c`: Demonstrates inter-process communication using pipes.
-- `test.c`: Standalone implementation of a mini-shell for testing input parsing and piping.
-- `helloworld.c`: Sample test program.
-- `Makefile` (inside `P3.tar`): Used to compile the project.
+## Project Structure
+```text
+.
+├── mysh.c         # Main shell (interactive + batch)
+├── commands.c     # Built-ins + helpers
+├── commands.h
+├── pipe.c         # Pipe demo / helper logic
+├── test.c         # Testing / parsing experiments
+├── helloworld.c   # Small sample program
+└── makefile       # Build automation
+```
 
-## ✨ Features
+## Build
+```bash 
+make
+```
+## Run
+```bash
+Interactive mode
+./mysh
+Batch mode (run commands from a file)
+./mysh <script_file>
+```
+## Examples
+```bash
+./mysh
+mysh> pwd
+mysh> ls
+mysh> ls | wc
+mysh> exit
+Notes / Limitations
+Piping support is intended for one pipe (A | B) based on the current implementation.
 
-### 🧩 Built-in Commands
-- `cd [dir]`: Change working directory
-- `pwd`: Print current working directory
-- `exit`: Exit the shell
+Behavior may vary depending on how your parser handles quotes, multiple spaces, redirects, etc.
+```
 
-### 🧵 External Command Execution
-- Executes any command available in system paths (`/bin`, `/usr/bin`, etc.)
-- Full support for absolute and relative paths
+## Future Improvements
+```bash
+Support multiple pipes (A | B | C)
 
-### 🔁 Piping
-- Supports simple two-command pipes:
+Add I/O redirection (>, <) in the main shell path
+
+Add quoting + escaping
+
+Better error messages + exit codes
+```
